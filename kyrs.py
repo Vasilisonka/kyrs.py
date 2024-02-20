@@ -9,6 +9,8 @@ from sklearn.metrics import accuracy_score, recall_score, precision_score
 data = np.loadtxt('var_16.txt', dtype='float')
 
 X = data[:, 0:16]
+X222 = data[:, 0:16]
+X2222 = data[:, 0:16]
 Y = data[:, 16]
 X_train1, X_test1, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=1)
 
