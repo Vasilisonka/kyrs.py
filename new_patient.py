@@ -219,7 +219,7 @@ class Ui_MainWindow(object):
         self.combobox_group.setFont(font)
         self.combobox_group.setEditable(True)
         self.combobox_group.setCurrentText("")
-        self.combobox_group.setMaxVisibleItems(3)
+        self.combobox_group.setMaxVisibleItems(4)
         self.combobox_group.setObjectName("combobox_group")
         self.gridLayout.addWidget(self.combobox_group, 7, 1, 1, 1)
         self.lineEdit_2 = QtWidgets.QLineEdit(self.centralwidget)

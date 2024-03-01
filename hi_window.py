@@ -1038,4 +1038,4 @@ class Ui_MainWindow(object):
         self.label_6.setText(_translate("MainWindow", "Резус фактор"))
         self.Delete.setText(_translate("MainWindow", "Удалить"))
         self.menu1.setTitle(_translate("MainWindow", "Справка"))
-        self.action.setText(_translate("MainWindow", "сп"))
+        self.action.setText(_translate("MainWindow", "Об авторе"))
