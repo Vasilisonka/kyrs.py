@@ -25,19 +25,20 @@ def disconect_from_db(db=None, connection:sqlite3.Connection=None):
 @connect
 def create_table(connection:sqlite3.Connection):
     cursor = connection.cursor()
-    sql = '''
-        CREATE TABLE USERS (user_id INTEGER PRIMARY KEY,
-        name TEXT,
-        surname TEXT,
-        patronymic TEXT,
-        type TEXT,
-        blood_type INTEGER,
-        rh TEXT
-        '''
     try:
+        cursor.execute('SELECT name FROM sqlite_master WHERE type="table" AND name="USERS"')
+    except OperationalError:
+        sql = '''
+            CREATE TABLE USERS (user_id INTEGER PRIMARY KEY,
+            name TEXT,
+            surname TEXT,
+            patronymic TEXT,
+            type TEXT,
+            blood_type INTEGER,
+            rh TEXT);
+            '''
         cursor.execute(sql)
-    except OperationalError as e:
-        print(e)
+        connection.commit()
 
 @connect
 def insert(connection:sqlite3.Connection, name:str, surname:str, patronymic:str, type:str, blood_type:str, rh:str):
@@ -49,7 +50,7 @@ def insert(connection:sqlite3.Connection, name:str, surname:str, patronymic:str,
         type,
         blood_type,
         rh
-    ) VALUES (?, ?, ?, ?, ?, ?)'''
+    ) VALUES (?, ?, ?, ?, ?, ?);'''
 
     try:
         cursor.execute(sql, (name, surname, patronymic, type, blood_type, rh))
@@ -60,7 +61,7 @@ def insert(connection:sqlite3.Connection, name:str, surname:str, patronymic:str,
 @connect
 def read_all(connection:sqlite3.Connection) -> list:
     cursor = connection.cursor()
-    sql = '''SELECT * FROM USERS'''
+    sql = '''SELECT * FROM USERS;'''
     c = cursor.execute(sql)
     result = c.fetchall()
     return result
@@ -68,8 +69,8 @@ def read_all(connection:sqlite3.Connection) -> list:
 @connect
 def delete(connection:sqlite3.Connection, id):
     cursor = connection.cursor()
-    sql_check = '''SELECT EXISTS(SELECT * FROM USERS WHERE user_id=?)'''
-    sql_delete = '''DELETE FROM USERS WHERW user_id=?'''
+    sql_check = '''SELECT EXISTS(SELECT * FROM USERS WHERE user_id=?);'''
+    sql_delete = '''DELETE FROM USERS WHERW user_id=?;'''
     c = cursor.execute(sql_check, (id,))
     result = c.fetchone()
     if result[0]:
