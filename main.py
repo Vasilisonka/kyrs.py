@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication
 from app.model.sqlite_model import ModelSQLite
-from app.controller.sql_controller import ControlerSQLite
+from app.controller.main_controller import ControlerMain
 from app.controller.add_controller import ControlerAdd
 from app.view.sql_view import MainWindow, AddWindow, DeleteWindow
 
@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
     model = ModelSQLite()
 
-    main_controller = ControlerSQLite(model)
+    main_controller = ControlerMain(model, None)
     add_controller = ControlerAdd(model, None)
 
 
@@ -18,6 +18,7 @@ if __name__ == '__main__':
     add_controller.view = add_view
 
     main_view = MainWindow(main_controller)
+    main_controller.view = main_view
     main_view.ui2 = add_view
 
     main_view.show()
