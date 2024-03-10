@@ -27,11 +27,11 @@ class MainWindow(QMainWindow): # pyuic5 hi_window.ui -o hi_window.py
 
         self.ui.comboBox_rezus.addItem('Положительный')
         self.ui.comboBox_rezus.addItem('Отрицательный')
-        self.ui.comboBox_rezus.currentIndexChanged.connect(self.on_comboBox_group_changed)
+        self.ui.comboBox_rezus.currentIndexChanged.connect(self.on_comboBox_rezus_changed)
 
         self.ui.Add.clicked.connect(self.show_Win2)
         self.ui.action.triggered.connect(self.show_Win3)
-        self.ui.Delete.clicked.connect(self.show_Win4)
+        self.ui.Delete.clicked.connect(self._main_controller.delete_row)
 
         self.ui.lineEdit.textChanged.connect(self.on_surname_change)
         self.ui.lineEdit_2.textChanged.connect(self.on_name_change)
@@ -70,8 +70,19 @@ class MainWindow(QMainWindow): # pyuic5 hi_window.ui -o hi_window.py
                 cell_text = item.text().lower()
                 row_visible = search_text in cell_text
                 self.ui.tableWidget.setRowHidden(row_ind, not row_visible)
-
-
+        self.ui.tableWidget.setColumnHidden(0, True)
+    
+    def arabic_to_roman(self, num):
+        match num:
+            case 0:
+                return "I"
+            case 1:
+                return "II"
+            case 2: 
+                return "III"
+            case 3:
+                return "IV"
+    
     def fill_table(self, data):
 
         self.ui.tableWidget.clearContents()
@@ -85,23 +96,23 @@ class MainWindow(QMainWindow): # pyuic5 hi_window.ui -o hi_window.py
                     case 4:
                         item = QTableWidgetItem(str('Донор' if int(col_data) == 0 else 'Реципиент'))
                     case 5:
-                        item = QTableWidgetItem(str(col_data))
+                        item = QTableWidgetItem(self.arabic_to_roman(col_data))
                     case 6:
                         item = QTableWidgetItem(str('Положительный' if int(col_data) == 0 else 'Отрицательный'))
                     case _:
                         item = QTableWidgetItem(str(col_data))
                 
                 self.ui.tableWidget.setItem(row_num, col_num, item)
-
+        self.ui.tableWidget.setColumnHidden(0, True)
 
     def show_Win2(self):
         self.ui2.show()
     def show_Win3(self):
         self.ui3 = InfoWindow()
         self.ui3.show()
-    def show_Win4(self):
-        self.ui4 = DeleteWindow(self._main_controller)
-        self.ui4.show()
+    # def show_Win4(self):
+    #     self.ui4 = DeleteWindow(self._main_controller)
+    #     self.ui4.show()
 
 
 class AddWindow(QMainWindow):# pyuic5 new_patient.ui -o new_patient.py

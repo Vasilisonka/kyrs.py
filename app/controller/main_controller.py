@@ -13,3 +13,8 @@ class ControlerMain(QObject):
     def update_table(self):
         data = self.model.read_all()
         self.view.fill_table(data)
+    
+    @pyqtSlot()
+    def delete_row(self):
+        id = self.view.ui.tableWidget.currentIndex().siblingAtColumn(0).data()
+        self.model.delete_object(id)

@@ -70,7 +70,7 @@ def read_all(connection:sqlite3.Connection) -> list:
 def delete(connection:sqlite3.Connection, id):
     cursor = connection.cursor()
     sql_check = '''SELECT EXISTS(SELECT * FROM USERS WHERE user_id=?);'''
-    sql_delete = '''DELETE FROM USERS WHERW user_id=?;'''
+    sql_delete = '''DELETE FROM USERS WHERE user_id=?;'''
     c = cursor.execute(sql_check, (id,))
     result = c.fetchone()
     if result[0]:

@@ -16,7 +16,7 @@ class ModelSQLite(QObject):
         sql.insert(self._connection, name, surname, patronymic, type, blood_type, rh)
         self.data_changed.emit()
     
-    def delete(self, id):
+    def delete_object(self, id):
         sql.delete(self._connection, id)
         self.data_changed.emit()
     
