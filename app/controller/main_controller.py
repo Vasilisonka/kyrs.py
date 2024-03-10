@@ -7,9 +7,9 @@ class ControlerMain(QObject):
         super().__init__()
         self.model = model
         self.view = view
-        self.model.data_changed.connect(self.data_changed)
+        self.model.data_changed.connect(self.update_table)
 
     @pyqtSlot()
-    def data_changed(self):
+    def update_table(self):
         data = self.model.read_all()
-        self.view.update_table(data)
+        self.view.fill_table(data)

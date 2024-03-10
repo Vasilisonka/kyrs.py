@@ -21,5 +21,8 @@ if __name__ == '__main__':
     main_controller.view = main_view
     main_view.ui2 = add_view
 
+    # initial data load
+    main_controller.update_table()
+
     main_view.show()
     app.exec_()

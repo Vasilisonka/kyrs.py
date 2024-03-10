@@ -72,7 +72,7 @@ class MainWindow(QMainWindow): # pyuic5 hi_window.ui -o hi_window.py
                 self.ui.tableWidget.setRowHidden(row_ind, not row_visible)
 
 
-    def update_table(self, data):
+    def fill_table(self, data):
 
         self.ui.tableWidget.clearContents()
         self.ui.tableWidget.setRowCount(len(data))
