@@ -14,6 +14,17 @@ class MainWindow(QMainWindow): # pyuic5 hi_window.ui -o hi_window.py
         self.header_row = ["№", "Имя", "Фамилия", "Отчество", "Тип", "Группа крови", "Rh"]
         self.header_row_donors = ["№", "Имя", "Группа крови"]
 
+        self.blood_type_relation = {
+            "O-":"O-",
+            "O+":"O-O+",
+            "A-":"O-A-",
+            "A+":"O-O+A-A+",
+            "B-":"O-B-",
+            "B+":"O-O+B-B+",
+            "AB-":"O-A-B-AB-",
+            "AB+":"O-O+A-A+B-B+AB-AB+"
+        }
+
         self.ui = hi_window.Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.combobox_Patient.addItem('Донор')
@@ -38,6 +49,8 @@ class MainWindow(QMainWindow): # pyuic5 hi_window.ui -o hi_window.py
         self.ui.lineEdit_2.textChanged.connect(self.on_name_change)
         self.ui.lineEdit_3.textChanged.connect(self.on_patronymic_change)
 
+        self.ui.tableWidget.itemClicked.connect(self.filter_donor_table)
+
     @pyqtSlot()
     def on_surname_change(self):
         self.filter_table(1, self.ui.lineEdit.text())
@@ -61,6 +74,23 @@ class MainWindow(QMainWindow): # pyuic5 hi_window.ui -o hi_window.py
     @pyqtSlot()
     def on_comboBox_rezus_changed(self):
         self.filter_table(6, self.ui.comboBox_rezus.currentText())
+    
+    @pyqtSlot()
+    def on_table_wiget_itemClicked(self, item):
+        self.filter_donor_table(item)
+
+    def filter_donor_table(self, item):
+        current_row = self.ui.tableWidget.currentRow()
+        blood_type = self.ui.tableWidget.item(current_row, 5).text()
+
+        for row_ind in range(self.ui.tableWidget_2.rowCount()):
+            item = self.ui.tableWidget_2.item(row_ind, 2)
+            if item is not None:
+                cell_text = item.text()
+                row_visible = cell_text in self.blood_type_relation[blood_type]
+                self.ui.tableWidget_2.setRowHidden(row_ind, not row_visible)
+        self.ui.tableWidget_2.setColumnHidden(0, True)
+        
 
     def filter_table(self, column_ind, text):
         search_text = text.lower()
@@ -84,7 +114,7 @@ class MainWindow(QMainWindow): # pyuic5 hi_window.ui -o hi_window.py
             case 3:
                 return "IV"
             
-    def fill_donorTable(self, data):
+    def fill_donor_table(self, data):
         self.ui.tableWidget_2.clearContents()
         self.ui.tableWidget_2.setRowCount(len(data))
         self.ui.tableWidget_2.setColumnCount(len(data[0]))
@@ -96,6 +126,7 @@ class MainWindow(QMainWindow): # pyuic5 hi_window.ui -o hi_window.py
                     case _:
                         item = QTableWidgetItem(str(col_data))
                 self.ui.tableWidget_2.setItem(row_num, col_num, item)
+        self.ui.tableWidget_2.setColumnHidden(0, True)
     
     def fill_table(self, data):
         self.ui.tableWidget.clearContents()
@@ -109,7 +140,7 @@ class MainWindow(QMainWindow): # pyuic5 hi_window.ui -o hi_window.py
                     case 4:
                         item = QTableWidgetItem(str('Донор' if int(col_data) == 0 else 'Реципиент'))
                     case 5:
-                        item = QTableWidgetItem(self.arabic_to_roman(col_data))
+                        item = QTableWidgetItem(col_data)
                     case 6:
                         item = QTableWidgetItem(str('Положительный' if int(col_data) == 0 else 'Отрицательный'))
                     case _:

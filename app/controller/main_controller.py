@@ -14,7 +14,7 @@ class ControlerMain(QObject):
         data = self.model.read_all()
         donor_data = self.model.read_donor_data()
         self.view.fill_table(data)
-        self.view.fill_donorTable(donor_data)
+        self.view.fill_donor_table(donor_data)
     
     @pyqtSlot()
     def delete_row(self):
