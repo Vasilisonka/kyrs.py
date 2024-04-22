@@ -22,3 +22,6 @@ class ModelSQLite(QObject):
     
     def read_all(self):
         return sql.read_all(self._connection)
+    
+    def read_donor_data(self):
+        return sql.read_donor_data(self._connection)

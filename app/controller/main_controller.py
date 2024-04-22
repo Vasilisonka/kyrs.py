@@ -12,7 +12,9 @@ class ControlerMain(QObject):
     @pyqtSlot()
     def update_table(self):
         data = self.model.read_all()
+        donor_data = self.model.read_donor_data()
         self.view.fill_table(data)
+        self.view.fill_donorTable(donor_data)
     
     @pyqtSlot()
     def delete_row(self):

@@ -12,6 +12,7 @@ class MainWindow(QMainWindow): # pyuic5 hi_window.ui -o hi_window.py
 
         self._main_controller = controller
         self.header_row = ["№", "Имя", "Фамилия", "Отчество", "Тип", "Группа крови", "Rh"]
+        self.header_row_donors = ["№", "Имя", "Группа крови"]
 
         self.ui = hi_window.Ui_MainWindow()
         self.ui.setupUi(self)
@@ -82,9 +83,21 @@ class MainWindow(QMainWindow): # pyuic5 hi_window.ui -o hi_window.py
                 return "III"
             case 3:
                 return "IV"
+            
+    def fill_donorTable(self, data):
+        self.ui.tableWidget_2.clearContents()
+        self.ui.tableWidget_2.setRowCount(len(data))
+        self.ui.tableWidget_2.setColumnCount(len(data[0]))
+        self.ui.tableWidget_2.setHorizontalHeaderLabels(self.header_row_donors)
+
+        for row_num, row_data in enumerate(data):
+            for col_num, col_data in enumerate(row_data):
+                match col_data:
+                    case _:
+                        item = QTableWidgetItem(str(col_data))
+                self.ui.tableWidget_2.setItem(row_num, col_num, item)
     
     def fill_table(self, data):
-
         self.ui.tableWidget.clearContents()
         self.ui.tableWidget.setRowCount(len(data))
         self.ui.tableWidget.setColumnCount(len(data[0]))

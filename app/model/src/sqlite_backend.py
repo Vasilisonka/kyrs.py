@@ -67,6 +67,14 @@ def read_all(connection:sqlite3.Connection) -> list:
     return result
 
 @connect
+def read_donor_data(connection:sqlite3.Connection) -> list:
+    cursor = connection.cursor()
+    sql = '''SELECT * FROM Donors;'''
+    c = cursor.execute(sql)
+    result = c.fetchall()
+    return result
+
+@connect
 def delete(connection:sqlite3.Connection, id):
     cursor = connection.cursor()
     sql_check = '''SELECT EXISTS(SELECT * FROM USERS WHERE user_id=?);'''
