@@ -12,7 +12,7 @@ class MainWindow(QMainWindow): # pyuic5 hi_window.ui -o hi_window.py
 
         self._main_controller = controller
         self.header_row = ["№", "Имя", "Фамилия", "Отчество", "Группа крови", "Пол", "Возраст"]
-        self.header_row_donors = ["№", "Имя", "Группа крови"]
+        self.header_row_donors = ["№", "Имя", "Группа крови", "Пол"]
 
         self.blood_type_relation = {
             "O-":"O-",
