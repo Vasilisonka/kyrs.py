@@ -16,6 +16,8 @@ class ControlerAdd(QObject):
             self.view.ui2.lineEdit.text(),
             self.view.ui2.lineEdit_3.text(),
             # self.view.ui2.combobox_Patient.currentIndex(),
-            self.view.ui2.combobox_group.currentIndex(),
+            self.view.ui2.combobox_pol.currentText(),
+            self.view.ui2.dateEdit.text(),
+            self.view.ui2.combobox_group.currentText()
             # self.view.ui2.combobox_rezus.currentIndex()
         )

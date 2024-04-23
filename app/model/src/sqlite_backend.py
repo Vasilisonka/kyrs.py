@@ -41,19 +41,19 @@ def create_table(connection:sqlite3.Connection):
         connection.commit()
 
 @connect
-def insert(connection:sqlite3.Connection, name:str, surname:str, patronymic:str, type:str, blood_type:str, rh:str):
+def insert(connection:sqlite3.Connection, name:str, surname:str, patronymic:str, blood_type:str, sex:str, DOB:str):
     cursor = connection.cursor()
     sql = '''INSERT INTO USERS (
         name,
         surname,
         patronymic,
-        type,
         blood_type,
-        rh
+        sex,
+        DOB
     ) VALUES (?, ?, ?, ?, ?, ?);'''
 
     try:
-        cursor.execute(sql, (name, surname, patronymic, type, blood_type, rh))
+        cursor.execute(sql, (name, surname, patronymic, blood_type, sex, DOB))
         connection.commit()
     except IntegrityError as e:
         print(e)

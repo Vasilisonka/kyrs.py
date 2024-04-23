@@ -12,8 +12,8 @@ class ModelSQLite(QObject):
     def connection(self):
         return self._connection
     
-    def insert(self, name:str, surname:str, patronymic:str, type:str, blood_type:str, rh:str):
-        sql.insert(self._connection, name, surname, patronymic, type, blood_type, rh)
+    def insert(self, name:str, surname:str, patronymic:str, sex:str, dob:str, blood_type:str):
+        sql.insert(self._connection, name, surname, patronymic, blood_type, sex, dob)
         self.data_changed.emit()
     
     def delete_object(self, id):
